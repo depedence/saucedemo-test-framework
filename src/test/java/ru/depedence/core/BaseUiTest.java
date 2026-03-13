@@ -2,9 +2,12 @@ package ru.depedence.core;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import org.junit.jupiter.api.AfterEach;
+import com.codeborne.selenide.WebDriverRunner;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
+import org.openqa.selenium.Cookie;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class BaseUiTest {
@@ -20,7 +23,22 @@ public abstract class BaseUiTest {
         Configuration.baseUrl = baseUrl;
     }
 
-    @AfterEach
+    @BeforeEach
+    void setupSession() {
+        Selenide.open("https://www.saucedemo.com");
+
+        Cookie sessionCookie = new Cookie.Builder("session-username", "standard_user")
+                .domain("www.saucedemo.com")
+                .path("/")
+                .isHttpOnly(false)
+                .isSecure(false)
+                .sameSite("None")
+                .build();
+
+        WebDriverRunner.getWebDriver().manage().addCookie(sessionCookie);
+    }
+
+    @AfterAll
     void tearDown() {
         Selenide.closeWebDriver();
     }

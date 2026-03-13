@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 public class LoginPage extends BasePage {
 
     private final SelenideElement loginBtn = $("#login-button");
+    private final SelenideElement errorMsgContainer = $(".error-message-container");
 
     @Step("Open page")
     public LoginPage open() {
@@ -40,7 +41,11 @@ public class LoginPage extends BasePage {
 
     @Step("Check error message")
     public void checkErrorMsg() {
-        $(".error-message-container").shouldBe(Condition.visible);
+        errorMsgContainer.shouldBe(Condition.visible);
+    }
+
+    public String getErrorMsg() {
+        return errorMsgContainer.getText();
     }
 
 }
