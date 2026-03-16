@@ -10,6 +10,19 @@ public class InventoryPage extends BasePage {
 
     private final SelenideElement menuBtn = $("#react-burger-menu-btn");
     private final SelenideElement cartBadge = $(".shopping_cart_badge");
+    private final SelenideElement logoutBtn = $("#logout_sidebar_link");
+
+    public InventoryPage clickBurgerMenu() {
+        menuBtn.click();
+        logoutBtn.shouldBe(Condition.visible);
+        return this;
+    }
+
+    public LoginPage clickLogoutBtn() {
+        logoutBtn.click();
+        $(".login_credentials_wrap-inner").shouldBe(Condition.visible);
+        return new LoginPage();
+    }
 
     public InventoryPage selectSort(String option) {
         $(".product_sort_container").selectOption(option);
