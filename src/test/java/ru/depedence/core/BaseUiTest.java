@@ -35,7 +35,9 @@ public abstract class BaseUiTest {
                 .sameSite("None")
                 .build();
 
+        WebDriverRunner.getWebDriver().manage().deleteAllCookies();
         WebDriverRunner.getWebDriver().manage().addCookie(sessionCookie);
+        Selenide.localStorage().clear();
     }
 
     @AfterAll
