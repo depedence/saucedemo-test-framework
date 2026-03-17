@@ -14,5 +14,6 @@ public class TestData {
     public static final String ORDER_TOTAL_PRICE = "Total: $32.39";
     public static final String PRODUCT_NAME = "Sauce Labs Backpack";
     public static final String PRODUCT_PRICE = "$29.99";
+    public static final String PRODUCT_ABOUT = "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.";
 
 }

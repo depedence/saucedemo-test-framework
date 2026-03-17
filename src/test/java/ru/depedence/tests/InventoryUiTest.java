@@ -1,7 +1,6 @@
 package ru.depedence.tests;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import ru.depedence.core.BaseUiTest;
 import ru.depedence.data.TestData;
 import ru.depedence.data.TestOrder;
@@ -11,7 +10,6 @@ import ru.depedence.pages.InventoryPage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class InventoryUiTest extends BaseUiTest {
 
     @Test
@@ -50,6 +48,15 @@ public class InventoryUiTest extends BaseUiTest {
         assertTrue(page.getSummaryInfo().contains(TestData.ORDER_TOTAL_PRICE));
 
         page.finishOrder();
+    }
+
+    @Test
+    void userCanGoToProductCard() {
+        InventoryPage page = new InventoryPage()
+                .open()
+                .clickToBackpack(TestData.PRODUCT_NAME);
+
+        assertEquals(TestData.PRODUCT_ABOUT, page.getProductText());
     }
 
 }

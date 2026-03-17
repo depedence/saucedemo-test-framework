@@ -5,10 +5,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.Cookie;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -24,14 +21,16 @@ public abstract class BaseUiTest {
 
         baseUrl = "https://www.saucedemo.com";
         Configuration.browser = "chrome";
-        Configuration.headless = false;
+        Configuration.headless = true;
         Configuration.timeout = 10_000;
         Configuration.baseUrl = baseUrl;
     }
 
     @BeforeEach
     void setupSession() {
-        Selenide.open("https://www.saucedemo.com");
+        Selenide.open("/");
+        WebDriverRunner.getWebDriver().manage().deleteAllCookies();
+        Selenide.localStorage().clear();
 
         Cookie sessionCookie = new Cookie.Builder("session-username", "standard_user")
                 .domain("www.saucedemo.com")
@@ -41,12 +40,10 @@ public abstract class BaseUiTest {
                 .sameSite("None")
                 .build();
 
-        WebDriverRunner.getWebDriver().manage().deleteAllCookies();
         WebDriverRunner.getWebDriver().manage().addCookie(sessionCookie);
-        Selenide.localStorage().clear();
     }
 
-    @AfterAll
+    @AfterEach
     void tearDown() {
         Selenide.closeWebDriver();
     }

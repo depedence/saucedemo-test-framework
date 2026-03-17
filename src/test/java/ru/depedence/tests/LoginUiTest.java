@@ -1,11 +1,11 @@
 package ru.depedence.tests;
 
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ru.depedence.core.BaseUiTest;
@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Epic("Swag Labs")
 @Feature("Login")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class LoginUiTest extends BaseUiTest {
 
     @Test
@@ -67,6 +66,7 @@ public class LoginUiTest extends BaseUiTest {
     @Story("Check error message")
     @DisplayName("Check error message after invalid login")
     void checkErrorMessage() {
+        WebDriverRunner.getWebDriver().manage().deleteAllCookies();
         TestUser user = TestData.LOCKED;
 
         LoginPage page = new LoginPage()

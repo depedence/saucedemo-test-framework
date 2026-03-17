@@ -1,6 +1,7 @@
 package ru.depedence.pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import java.util.List;
@@ -11,6 +12,17 @@ public class InventoryPage extends BasePage {
     private final SelenideElement menuBtn = $("#react-burger-menu-btn");
     private final SelenideElement cartBadge = $(".shopping_cart_badge");
     private final SelenideElement logoutBtn = $("#logout_sidebar_link");
+    private final ElementsCollection itemName = $$(".inventory_item_name");
+    private final ElementsCollection itemPrice = $$(".inventory_item_price");
+
+    public InventoryPage clickToBackpack(String productName) {
+        itemName.findBy(Condition.text(productName)).click();
+        return this;
+    }
+
+    public String getProductText() {
+        return $("[data-test='inventory-item-desc']").getText();
+    }
 
     public InventoryPage clickBurgerMenu() {
         menuBtn.click();
@@ -30,11 +42,11 @@ public class InventoryPage extends BasePage {
     }
 
     public List<String> getItemNames() {
-        return $$(".inventory_item_name").texts();
+        return itemName.texts();
     }
 
     public List<Double> getItemPrices() {
-        return $$(".inventory_item_price").texts().stream()
+        return itemPrice.texts().stream()
                 .map(p -> Double.parseDouble(p.replace("$", "")))
                 .collect(Collectors.toList());
     }
@@ -60,7 +72,7 @@ public class InventoryPage extends BasePage {
     }
 
     public double getTotalPrice() {
-        return $$(".inventory_item_price").stream()
+        return itemPrice.stream()
                 .mapToDouble(el -> Double.parseDouble(el.getText().replace("$", "")))
                 .sum();
     }

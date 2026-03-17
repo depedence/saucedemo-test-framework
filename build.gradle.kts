@@ -30,6 +30,8 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 
+    maxParallelForks = Runtime.getRuntime().availableProcessors()
+
     testLogging {
         events("failed")
         showStandardStreams = false

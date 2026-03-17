@@ -2,7 +2,6 @@ package ru.depedence.tests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import ru.depedence.core.BaseUiTest;
 import ru.depedence.pages.InventoryPage;
 
@@ -11,7 +10,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SortUiTest extends BaseUiTest {
 
     private InventoryPage page;
